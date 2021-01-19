@@ -1,3 +1,4 @@
+import { EuiFlexGroup, EuiFlexItem, EuiLoadingSpinner, EuiPageContentBody, EuiPageContentHeader, EuiPageContentHeaderSection, EuiPanel, EuiSpacer, EuiTitle } from '@elastic/eui';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Finder, WeatherCard } from '../../_components';
@@ -9,18 +10,46 @@ class HomePage extends React.Component {
 
     }
 
-    handleMunicipes = () =>{
-        console.log('handleMunicipes',this.props)
+    handleMunicipes = () => {
+        console.log('handleMunicipes', this.props)
     }
 
 
     render() {
-        const { weatherConditionList } = this.props;
-        console.log('weatherConditionList',weatherConditionList)
+        const { weatherConditionList, loading } = this.props;
+        console.log('weatherConditionList', weatherConditionList)
         return (
             <>
-                <Finder />
-              {weatherConditionList.map((wc) => {return <WeatherCard weatherCondition={wc}/>})}
+                <EuiPageContentHeader>
+                    <EuiPageContentHeaderSection>
+                        <EuiTitle>
+                            <h3>El tiempo en tu ciudad</h3>
+                        </EuiTitle>
+                    </EuiPageContentHeaderSection>
+                </EuiPageContentHeader>
+                <EuiPageContentBody>
+                    <EuiPanel hasShadow={true}>
+                        <Finder />
+                    </EuiPanel>
+                    <EuiSpacer size="xl" />
+
+                    {weatherConditionList.length === 0 && !loading &&
+                        <EuiPanel color="subdued" borderRadius="none" hasShadow={false}>
+                            <p>Realize una búsqueda para ver datos...</p>
+                        </EuiPanel>}
+
+                    {loading &&
+                        <EuiFlexGroup justifyContent="spaceAround" responsive={false} alignItems="center">
+                            <EuiFlexItem grow={false}>
+                                <EuiLoadingSpinner size="xl" />
+                            </EuiFlexItem>
+                        </EuiFlexGroup>}
+                        <EuiFlexGroup wrap >
+                    {!loading && weatherConditionList.map((wc) => { return <WeatherCard weatherCondition={wc} /> })}
+                    </EuiFlexGroup>
+
+
+                </EuiPageContentBody>
             </>
         );
     }
@@ -28,8 +57,8 @@ class HomePage extends React.Component {
 
 function mapState(state) {
     const { weatherConditions } = state;
-    const { weatherConditionList } = weatherConditions;
-    return { weatherConditionList };
+    const { weatherConditionList, loading } = weatherConditions;
+    return { weatherConditionList, loading };
 }
 
 

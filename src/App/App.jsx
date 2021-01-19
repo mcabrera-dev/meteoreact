@@ -10,16 +10,17 @@ import { LoginPage } from '../Pages/LoginPage';
 import { RegisterPage } from '../Pages/RegisterPage';
 import {
     EuiPage,
-    EuiPageSideBar,
     EuiPageBody,
     EuiPageHeader,
     EuiPageContent,
     EuiPageHeaderSection,
     EuiTitle,
     EuiCallOut,
+
 } from '@elastic/eui';
-import '@elastic/eui/dist/eui_theme_amsterdam_dark.css';
+import '@elastic/eui/dist/eui_theme_amsterdam_light.css';
 import { bindActionCreators } from 'redux';
+import { Flyout } from '../_components/Flyout'
 
 
 class App extends React.Component {
@@ -36,9 +37,6 @@ class App extends React.Component {
         const { alert } = this.props;
         return (
             <EuiPage>
-                <EuiPageSideBar>
-                 
-                </EuiPageSideBar>
                 <EuiPageBody component="div">
                     <EuiPageHeader>
                         <EuiPageHeaderSection>
@@ -46,9 +44,11 @@ class App extends React.Component {
                                 <h1>Meteoreact</h1>
                             </EuiTitle>
                         </EuiPageHeaderSection>
-                        <EuiPageHeaderSection>Page abilities</EuiPageHeaderSection>
+                        <EuiPageHeaderSection>
+                        <Flyout/>
+                        </EuiPageHeaderSection>
                     </EuiPageHeader>
-                    <EuiPageContent>
+                    <EuiPageContent grow={true}>
                         <Router history={history}>
                             <Switch>
                                 <PrivateRoute exact path="/" component={HomePage} />
@@ -79,7 +79,7 @@ function mapDispatchToProps(dispatch) {
     return {
         alertActions: bindActionCreators(alertActionCreators, dispatch),
     }
-  }
+}
 
 
 const connectedApp = connect(mapState, mapDispatchToProps)(App);

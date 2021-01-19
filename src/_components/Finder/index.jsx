@@ -1,4 +1,4 @@
-import { EuiButton, EuiComboBox, EuiFieldText, EuiFlexGroup, EuiFlexItem, EuiFormRow } from '@elastic/eui';
+import { EuiButton, EuiButtonIcon, EuiComboBox, EuiFieldText, EuiFlexGroup, EuiFlexItem, EuiFormRow } from '@elastic/eui';
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -11,7 +11,7 @@ import { getMunicipalityWheatherCondition } from "../../actionCreators/weatherCo
 export const Finder = ({ }) => {
 
     const municipalities = useSelector(state => state.provinces.municipalities);
-   
+
     const dispatch = useDispatch();
 
     const [selectedProvince, setSelectedProvince] = useState([]);
@@ -30,10 +30,11 @@ export const Finder = ({ }) => {
 
     const onChangeMunicipalities = (selectedOptions) => {
         setSelectedMunicipalities(selectedOptions);
-     
-        if (selectedOptions && selectedOptions.length > 0) {
-            console.log('selectedOptions', selectedOptions)
-            dispatch(getMunicipalityWheatherCondition(selectedOptions[0]));
+    };
+
+    const onSearchMunicipalities = () => {
+        if (selectedMunicipalities && selectedMunicipalities.length > 0) {
+            dispatch(getMunicipalityWheatherCondition(selectedMunicipalities));
         }
 
     };
@@ -67,7 +68,15 @@ export const Finder = ({ }) => {
             </EuiFlexItem>
             <EuiFlexItem grow={false}>
                 <EuiFormRow hasEmptyLabelSpace>
-                    <EuiButton>Guardar búsqueda</EuiButton>
+                    <EuiButton
+                        fill
+                        color="primary"
+                        size="m"
+                        iconType="search"
+                        disabled={selectedMunicipalities.length === 0}
+                        onClick={onSearchMunicipalities}>
+                        Buscar
+                    </EuiButton>
                 </EuiFormRow>
             </EuiFlexItem>
         </EuiFlexGroup>

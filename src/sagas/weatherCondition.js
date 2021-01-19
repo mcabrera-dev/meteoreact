@@ -3,13 +3,14 @@ import { weatherService } from '../services';
 import { all, call, put, takeEvery, takeLatest } from "redux-saga/effects";
 
 function* getMunicipalityWeatherCondition(action) {
+    console.log('LLEGASAGA1',action)
     try {
-        const weatherCondition = yield call(() => weatherService.getMunicipalityWeatherCondition(action.municipality));
-        //console.log('LLEGASAGA',weatherCondition)
+        const responses = yield all (action.municipalities.map((municipality) => call(() => weatherService.getMunicipalityWeatherCondition(municipality))));
+        console.log('LLEGASAGA2',responses)
 
         yield put({
             type: actionTypes.GET_WEATHER_CONDITON_SUCCESS,
-            weatherCondition: weatherCondition
+            weatherConditions: responses
         })
     } catch (error) {
         yield all(

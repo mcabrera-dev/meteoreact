@@ -15,15 +15,17 @@ export function weatherConditions(state = initialState, action) {
       };
     case actionTypes.GET_WEATHER_CONDITON_SUCCESS:
 
-    const weatherConditionsCopy = [...state.weatherConditionList].filter((wc) => wc.municipio.CODIGOINE === action.weatherCondition.CODIGOINE)
-    weatherConditionsCopy.push(action.weatherCondition)
+   /*  const weatherConditionsCopy = [...state.weatherConditionList].filter((wc) => wc.municipio.CODIGOINE === action.weatherCondition.CODIGOINE)
+    weatherConditionsCopy.push(action.weatherCondition) */
       return {
         ...state,
         loading: false,
-        weatherConditionList: weatherConditionsCopy
+        weatherConditionList: action.weatherConditions
       };
     case actionTypes.GET_WEATHER_CONDITON_FAILURE:
       return { 
+        ...state,
+        loading: false,
         error: action.error
       };
 
