@@ -20,7 +20,6 @@ export const Finder = ({ }) => {
 
     const onChangeProvince = (selectedOptions) => {
         setSelectedProvince(selectedOptions);
-        console.log('selectedOptions', selectedOptions)
         if (selectedOptions && selectedOptions[0]) {
             dispatch(getMunicipalities(selectedOptions[0].key));
             //setIsLoadingMunicipalities(true)
@@ -57,7 +56,6 @@ export const Finder = ({ }) => {
                 <EuiFormRow label="Municipios" helpText="Seleccione uno o varios municipios">
                     <EuiComboBox
                         placeholder="Seleccione municipios"
-                        async
                         options={municipalities}
                         isLoading={isLoadingMunicipalities}
                         selectedOptions={selectedMunicipalities}

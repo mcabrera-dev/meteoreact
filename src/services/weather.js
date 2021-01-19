@@ -17,8 +17,6 @@ function getMunicipalityWeatherCondition(municipality) {
     const requestOptions = {
         method: 'GET',
     };
-    console.log('SgetMunicipalityWeatherCondition',municipality)
-
     return fetch(`https://www.el-tiempo.net/api/json/v2/provincias/${municipality.CODPROV}/municipios/${municipality.CODIGOINE.slice(0, 5)}`, requestOptions).then(handleResponse);
 }
 

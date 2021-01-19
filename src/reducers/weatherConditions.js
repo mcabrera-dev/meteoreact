@@ -5,8 +5,8 @@ const initialState = {
   weatherConditionList:[]
 }
 
+
 export function weatherConditions(state = initialState, action) {
-  console.log('reducer',action)
   switch (action.type) {
     case actionTypes.GET_WEATHER_CONDITON_REQUEST:
       return {
@@ -27,6 +27,15 @@ export function weatherConditions(state = initialState, action) {
         ...state,
         loading: false,
         error: action.error
+      };
+    case actionTypes.REMOVE_WEATHER_CONDITON_STATE:
+      console.log('REMOVESAGA',action.weatherCondition)
+      const weatherConditionsCopy = [...state.weatherConditionList].filter((wc) => wc.municipio.CODIGOINE !== action.weatherCondition.municipio.CODIGOINE)
+      console.log('REMOVESAGA2',weatherConditionsCopy)
+      return {
+        ...state,
+        loading: false,
+        weatherConditionList: weatherConditionsCopy
       };
 
     default:

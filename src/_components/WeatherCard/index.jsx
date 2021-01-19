@@ -1,64 +1,54 @@
-import { EuiButtonIcon, EuiCard, EuiColorPalettePicker, EuiFlexGroup, EuiFlexItem, EuiIcon, EuiSpacer, EuiStat } from '@elastic/eui';
 import React, { useState } from 'react';
+import { EuiButtonIcon, EuiCard, EuiFlexGroup, EuiFlexItem, EuiSpacer, EuiStat } from '@elastic/eui';
 import {
     Chart,
-    Settings,
     Axis,
     BarSeries,
-    DataGenerator,
+    Position,
+    ScaleType,
 } from '@elastic/charts';
 
-import { getWeatherIcon } from '../../_helpers/icons'
-import {
-    euiPaletteCool,
-} from '@elastic/eui/lib/services';
-import { euiPalettePositive } from '@elastic/eui/lib/services/color';
-import { EUI_CHARTS_THEME_LIGHT } from '@elastic/eui/dist/eui_charts_theme';
 
-const euiTheme = EUI_CHARTS_THEME_LIGHT.theme;
+import { getWeatherIcon } from '../../_helpers/icons'
+import '@elastic/charts/dist/theme_only_light.css';
+import { useDispatch } from 'react-redux';
+import { removeWeatherCondition } from "../../actionCreators/weatherCondition";
+
+const getRainPrediction = (weatherCondition) => {
+    const predictions = weatherCondition.proximos_dias
+    const rainPredictions = [];
+
+    predictions.forEach((p) => {
+        rainPredictions.push({ x: p['@attributes'].fecha, y: Array.isArray(p.prob_precipitacion) ? p.prob_precipitacion[0] : p.prob_precipitacion })
+    });
+
+    return rainPredictions
+}
 
 export const WeatherCard = ({ weatherCondition }) => {
-    const [barPalette, setBarPalette] = useState('euiPaletteColorBlind');
-    const dg = new DataGenerator();
-    const data2 = dg.generateGroupedSeries(20, 5);
-    const customColors = {
-        colors: {
-            vizColors: euiPalettePositive(5),
-        },
+    const dispatch = useDispatch();
+
+    const onRemove = (weatherCondition) => {
+        dispatch(removeWeatherCondition(weatherCondition));
+
     };
-    console.log('data2', data2)
+
     return (
         <EuiFlexItem key={weatherCondition.municipio.CODIGOINE} style={{ minWidth: 350, maxWidth: 350 }}>
             <EuiCard
                 icon={getWeatherIcon(weatherCondition.stateSky.id)}
                 title={weatherCondition.municipio.NOMBRE}
                 isDisabled={false}
-                onClick={() => { }}
+                description={false}
                 footer={<EuiFlexItem grow={false}>
                     <EuiButtonIcon
                         color={'danger'}
-                        onClick={() => { }}
+                        onClick={() => onRemove(weatherCondition)}
                         iconType="trash"
                         aria-label="Next"
                     />
                 </EuiFlexItem>}
             >
-
-                <Chart size={{ height: 200 }}>
-                    <Settings theme={euiTheme} showLegend={false} />
-                    <BarSeries
-                        id="status"
-                        name="Status"
-                        data={[[0, 1], [1, 2]]}
-                        xScaleType="time"
-                        xAccessor={0}
-                        yAccessors={[1]}
-                    />
-                    <Axis id="bottom-axis" position="bottom" showGridLines />
-                    <Axis id="left-axis" position="left" showGridLines />
-                </Chart>
-
-                <EuiSpacer size="xxl" />
 
                 <EuiFlexGroup wrap>
                     <EuiFlexItem>
@@ -70,13 +60,29 @@ export const WeatherCard = ({ weatherCondition }) => {
                     </EuiFlexItem>
                     <EuiFlexItem>
                         <EuiStat
-                            title={`${weatherCondition.lluvia}%`}
+                            title={`${weatherCondition.pronostico.hoy.prob_precipitacion[3]}%`}
                             description="Probabilidad de lluvia"
                             titleColor="primary"
                         />
                     </EuiFlexItem>
 
                 </EuiFlexGroup>
+
+                <EuiSpacer size="l" />
+                <h4>Previsión de lluvia para los próximos días</h4>
+
+                <div> <Chart size={[340, 200]}>
+                    <Axis id="rainProb" title="Probabilidad de lluvia" position={Position.Left} />
+                    <Axis id="x" position={Position.Bottom} />
+                    <BarSeries
+                        id="bars"
+                        name="amount"
+                        xScaleType={ScaleType.Ordinal}
+                        xAccessor="x"
+                        yAccessors={["y"]}
+                        data={getRainPrediction(weatherCondition)}
+                    />
+                </Chart></div>
             </EuiCard>
         </EuiFlexItem>
     )

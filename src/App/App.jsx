@@ -16,6 +16,9 @@ import {
     EuiPageHeaderSection,
     EuiTitle,
     EuiCallOut,
+    EuiButton,
+    EuiFlexGroup,
+    EuiFlexItem,
 
 } from '@elastic/eui';
 import '@elastic/eui/dist/eui_theme_amsterdam_light.css';
@@ -32,9 +35,11 @@ class App extends React.Component {
             this.props.alertActions.clear();
         });
     }
+    
 
     render() {
         const { alert } = this.props;
+        
         return (
             <EuiPage>
                 <EuiPageBody component="div">
@@ -45,7 +50,15 @@ class App extends React.Component {
                             </EuiTitle>
                         </EuiPageHeaderSection>
                         <EuiPageHeaderSection>
-                        <Flyout/>
+                            {localStorage.getItem('user') && 
+                            <EuiFlexGroup justifyContent="spaceAround" responsive={false} alignItems="center">
+                                <EuiFlexItem grow={false}>
+                                <Flyout />
+                                </EuiFlexItem>
+                                <EuiFlexItem grow={false}>
+                                <EuiButton color="danger" href="/login">Cerrar Sesión</EuiButton>
+                                </EuiFlexItem>
+                            </EuiFlexGroup>}
                         </EuiPageHeaderSection>
                     </EuiPageHeader>
                     <EuiPageContent grow={true}>

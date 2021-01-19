@@ -1,17 +1,13 @@
-import { EuiFlexGroup, EuiFlexItem, EuiLoadingSpinner, EuiPageContentBody, EuiPageContentHeader, EuiPageContentHeaderSection, EuiPanel, EuiSpacer, EuiTitle } from '@elastic/eui';
+import { EuiButton, EuiFieldText, EuiFlexGroup, EuiFlexItem, EuiLoadingSpinner, EuiPageContentBody, EuiPageContentHeader, EuiPageContentHeaderSection, EuiPanel, EuiSpacer, EuiTitle } from '@elastic/eui';
 import React from 'react';
 import { connect } from 'react-redux';
-import { Finder, WeatherCard } from '../../_components';
+import { Finder, WeatherCard, SearchSaver } from '../../_components';
 
 
 
 class HomePage extends React.Component {
     componentDidMount() {
 
-    }
-
-    handleMunicipes = () => {
-        console.log('handleMunicipes', this.props)
     }
 
 
@@ -44,11 +40,13 @@ class HomePage extends React.Component {
                                 <EuiLoadingSpinner size="xl" />
                             </EuiFlexItem>
                         </EuiFlexGroup>}
-                        <EuiFlexGroup wrap >
-                    {!loading && weatherConditionList.map((wc) => { return <WeatherCard weatherCondition={wc} /> })}
+                    {!loading && weatherConditionList.length > 0 &&
+                        <SearchSaver />}
+                    <EuiFlexGroup wrap >
+                        {!loading && weatherConditionList.map((wc) => { return <WeatherCard weatherCondition={wc} /> })}
                     </EuiFlexGroup>
 
-
+                    <EuiSpacer size="xl" />
                 </EuiPageContentBody>
             </>
         );
