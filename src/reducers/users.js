@@ -26,6 +26,11 @@ export function users(state = initialState, action) {
       return { registered: true };
     case actionTypes.USERS_REGISTER_FAILURE:
       return {};
+
+    case actionTypes.USERS_REMOVE_SEARCH_SUCCESS:
+    case actionTypes.USERS_SAVE_SEARCH_SUCCESS:
+      return { loggedIn: true,
+        user: JSON.parse(localStorage.getItem('user')) };
     default:
       return state
   }

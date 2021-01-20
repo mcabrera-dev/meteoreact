@@ -7,7 +7,9 @@ export const userService = {
     getAll,
     getById,
     update,
-    delete: _delete
+    delete: _delete,
+    saveSearch,
+    removeSearch
 };
 
 function login(userLogin) {
@@ -69,6 +71,26 @@ function update(user) {
     };
 
     return fetch(`/users/${user.id}`, requestOptions).then(handleResponse);;
+}
+
+function saveSearch(search) {
+    const requestOptions = {
+        method: 'POST',
+        headers: { ...authHeader(), 'Content-Type': 'application/json' },
+        body: JSON.stringify(search)
+    };
+
+    return fetch(`/user/save/search`, requestOptions).then(handleResponse);;
+}
+
+function removeSearch(search) {
+    const requestOptions = {
+        method: 'POST',
+        headers: { ...authHeader(), 'Content-Type': 'application/json' },
+        body: JSON.stringify(search)
+    };
+
+    return fetch(`/user/remove/search`, requestOptions).then(handleResponse);;
 }
 
 // prefixed function name with underscore because delete is a reserved word in javascript

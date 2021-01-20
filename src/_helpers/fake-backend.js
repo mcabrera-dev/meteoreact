@@ -120,6 +120,69 @@ export function configureFakeBackend() {
                     return;
                 }
 
+                if (url.endsWith('/user/save/search') && opts.method === 'POST') {
+                    // get new user object from post body
+                    let newSearch = JSON.parse(opts.body);
+                    let loggedUser = JSON.parse(localStorage.getItem('user')) || undefined;
+
+                    if(!loggedUser.searches){
+                        loggedUser.searches = [];
+                    }
+
+                    let duplicateSearchName = loggedUser.searches.filter(search => { return search.name === newSearch.name; }).length;
+                    
+
+                    // validation
+                    
+                    if (duplicateSearchName) {
+                        reject('Nombre de búsqueda "' + newSearch.name + '" ya ha sido registrado');
+                        return;
+                    }
+
+                    let usersCopy = [...users.filter(user => { return user.id !== loggedUser.id; })];
+                    // save new user
+                    usersCopy.push(loggedUser);
+                    loggedUser.searches.push(newSearch);
+
+
+                    localStorage.setItem('users', JSON.stringify(usersCopy));
+                    localStorage.setItem('user', JSON.stringify(loggedUser));
+
+
+                    // respond 200 OK
+                    resolve({ ok: true, text: () => Promise.resolve() });
+
+                    return;
+                }
+
+
+                if (url.endsWith('/user/remove/search') && opts.method === 'POST') {
+                    // get new user object from post body
+                   
+                    let toRemoveSearch = JSON.parse(opts.body);
+                    let loggedUser = JSON.parse(localStorage.getItem('user')) || undefined;
+
+                    if(!loggedUser.searches){
+                        loggedUser.searches = [];
+                    }
+
+                    let searchsCopy = [...loggedUser.searches.filter(search => { return search.id !== toRemoveSearch.id; })];
+                    
+                    loggedUser.searches = searchsCopy
+
+                    let usersCopy = [...users.filter(user => { return user.id !== loggedUser.id; })];
+                    // save new user
+                    usersCopy.push(loggedUser);
+                    localStorage.setItem('users', JSON.stringify(usersCopy));
+                    localStorage.setItem('user', JSON.stringify(loggedUser));
+
+
+                    // respond 200 OK
+                    resolve({ ok: true, text: () => Promise.resolve() });
+
+                    return;
+                }
+
                 // pass through any requests not handled above
                 realFetch(url, opts).then(response => resolve(response));
 

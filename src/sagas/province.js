@@ -1,6 +1,6 @@
 import * as actionTypes from '../actionTypes/province';
 import { weatherService } from '../services';
-import { all, call, put, takeEvery, takeLatest } from "redux-saga/effects";
+import { all, call, put, takeLatest } from "redux-saga/effects";
 
 function* getMunicipalities(action) {
     try {

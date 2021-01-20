@@ -1,14 +1,11 @@
-import { EuiButton, EuiButtonIcon, EuiComboBox, EuiFieldText, EuiFlexGroup, EuiFlexItem, EuiFormRow } from '@elastic/eui';
+import { EuiButton, EuiComboBox, EuiFlexGroup, EuiFlexItem, EuiFormRow } from '@elastic/eui';
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import { provincesList } from '../../_helpers/provincesList'
-import * as provincesActionCreators from '../../actionCreators/province'
 import { useDispatch, useSelector } from "react-redux";
 import { getMunicipalities } from "../../actionCreators/province";
 import { getMunicipalityWheatherCondition } from "../../actionCreators/weatherCondition";
 
-export const Finder = ({ }) => {
+export const Finder = () => {
 
     const municipalities = useSelector(state => state.provinces.municipalities);
 
@@ -16,13 +13,12 @@ export const Finder = ({ }) => {
 
     const [selectedProvince, setSelectedProvince] = useState([]);
     const [selectedMunicipalities, setSelectedMunicipalities] = useState([]);
-    const [isLoadingMunicipalities, setIsLoadingMunicipalities] = useState(false)
+    const [isLoadingMunicipalities] = useState(false)
 
     const onChangeProvince = (selectedOptions) => {
         setSelectedProvince(selectedOptions);
         if (selectedOptions && selectedOptions[0]) {
             dispatch(getMunicipalities(selectedOptions[0].key));
-            //setIsLoadingMunicipalities(true)
         }
 
     };

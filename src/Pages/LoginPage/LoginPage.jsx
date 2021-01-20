@@ -1,11 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { EuiFieldPassword, EuiButton, EuiFieldText, EuiForm, EuiFormRow, EuiPageContent, EuiPageContentBody, EuiPageContentHeader, EuiPageContentHeaderSection, EuiPageHeader, EuiPageHeaderSection, EuiTitle, EuiFlexItem, EuiFlexGroup, EuiLoadingSpinner, EuiSpacer } from '@elastic/eui';
+import { EuiFieldPassword, EuiButton, EuiFieldText, EuiForm, EuiFormRow, EuiPageContentBody, EuiPageContentHeader, EuiPageContentHeaderSection, EuiTitle, EuiFlexItem, EuiFlexGroup, EuiLoadingSpinner, EuiSpacer } from '@elastic/eui';
 import { bindActionCreators } from 'redux';
 
 import * as userActionCreators from '../../actionCreators/user'
-import { Redirect } from 'react-router-dom';
 
 class LoginPage extends React.Component {
     constructor(props) {
@@ -65,7 +64,7 @@ class LoginPage extends React.Component {
     render() {
         const { loggingIn } = this.props;
         const { errors } = this.state;
-        const { username, password, submitted } = this.state;
+        const { username, password } = this.state;
         return (
             <>
 

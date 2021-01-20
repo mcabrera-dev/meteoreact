@@ -1,8 +1,13 @@
 import { EuiButton, EuiFieldText, EuiFlexGroup, EuiFlexItem, EuiFormRow } from '@elastic/eui'
 import React, { useState } from 'react';
+import { saveSearch } from "../../actionCreators/user";
+import { useDispatch } from 'react-redux';
+import {default as UUID} from "uuid"; 
 
 
-export const SearchSaver = ({ }) => {
+export const SearchSaver = ({ weatherConditionsList }) => {
+
+    const dispatch = useDispatch();
 
     const [searchName, setSsearchName] = useState(undefined);
     const [error, setError] = useState(undefined);
@@ -12,13 +17,21 @@ export const SearchSaver = ({ }) => {
         setSsearchName(value);
     }
 
+    const formatSearchData = () => {
+        const search = {
+            name: searchName,
+            municipalities: weatherConditionsList.map((wc) => {return wc.municipio}),
+            id: UUID.v4()
+        }
+        return search
+    }
+
     const handleSubmit = (e) => {
         e.preventDefault();
 
 
         if (validate()) {
-            //this.props.userActions.login({username, password});
-            setSsearchName(undefined)
+            dispatch(saveSearch(formatSearchData()));
         }
     }
 

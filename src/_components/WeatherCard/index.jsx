@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { EuiButtonIcon, EuiCard, EuiFlexGroup, EuiFlexItem, EuiSpacer, EuiStat } from '@elastic/eui';
 import {
     Chart,
@@ -25,7 +25,7 @@ const getRainPrediction = (weatherCondition) => {
     return rainPredictions
 }
 
-export const WeatherCard = ({ weatherCondition }) => {
+export const WeatherCard = ({ weatherCondition, index}) => {
     const dispatch = useDispatch();
 
     const onRemove = (weatherCondition) => {
@@ -34,7 +34,7 @@ export const WeatherCard = ({ weatherCondition }) => {
     };
 
     return (
-        <EuiFlexItem key={weatherCondition.municipio.CODIGOINE} style={{ minWidth: 350, maxWidth: 350 }}>
+        <EuiFlexItem key={index} style={{ minWidth: 350, maxWidth: 350 }}>
             <EuiCard
                 icon={getWeatherIcon(weatherCondition.stateSky.id)}
                 title={weatherCondition.municipio.NOMBRE}

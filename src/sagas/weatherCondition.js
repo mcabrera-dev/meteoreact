@@ -1,6 +1,6 @@
 import * as actionTypes from '../actionTypes/weatherCondition';
 import { weatherService } from '../services';
-import { all, call, put, takeEvery, takeLatest } from "redux-saga/effects";
+import { all, call, put, takeEvery } from "redux-saga/effects";
 
 function* getMunicipalityWeatherCondition(action) {
     try {
