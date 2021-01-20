@@ -1,6 +1,6 @@
 # METEOREACT
 
-This project is a demo project 
+This project is a demo project for querying weather data from the el-tiempo.net [API](https://www.el-tiempo.net/api) with user login & registration
 
 ### Mandatory requirements
 - Create with CRA
