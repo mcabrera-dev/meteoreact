@@ -14,9 +14,6 @@ export function weatherConditions(state = initialState, action) {
         loading: true
       };
     case actionTypes.GET_WEATHER_CONDITON_SUCCESS:
-
-   /*  const weatherConditionsCopy = [...state.weatherConditionList].filter((wc) => wc.municipio.CODIGOINE === action.weatherCondition.CODIGOINE)
-    weatherConditionsCopy.push(action.weatherCondition) */
       return {
         ...state,
         loading: false,
@@ -29,9 +26,7 @@ export function weatherConditions(state = initialState, action) {
         error: action.error
       };
     case actionTypes.REMOVE_WEATHER_CONDITON_STATE:
-      console.log('REMOVESAGA',action.weatherCondition)
       const weatherConditionsCopy = [...state.weatherConditionList].filter((wc) => wc.municipio.CODIGOINE !== action.weatherCondition.municipio.CODIGOINE)
-      console.log('REMOVESAGA2',weatherConditionsCopy)
       return {
         ...state,
         loading: false,

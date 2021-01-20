@@ -27,8 +27,6 @@ export const SearchSaver = ({ weatherConditionsList }) => {
     }
 
     const handleSubmit = (e) => {
-        e.preventDefault();
-
 
         if (validate()) {
             dispatch(saveSearch(formatSearchData()));
