@@ -29,7 +29,7 @@ export const Flyout = () => {
   const [isFlyoutVisible, setIsFlyoutVisible] = useState(false);
   const closeFlyout = () => setIsFlyoutVisible(false);
   const showFlyout = () => setIsFlyoutVisible(true);
-  const [searches, setList] = useState(loggedUser.searches);
+  const [searches, setList] = useState(loggedUser.searches || []);
   const onDragEnd = ({ source, destination }) => {
     if (source && destination) {
       const items = euiDragDropReorder(searches, source.index, destination.index);
@@ -39,7 +39,7 @@ export const Flyout = () => {
   };
 
   useEffect(() => {
-    setList(loggedUser.searches);
+    setList(loggedUser.searches || []);
   }, [loggedUser]);
 
   const onLoadSearch = (municipalities) => {
