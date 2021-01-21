@@ -11,10 +11,11 @@ This project is a demo project for querying weather data from the el-tiempo.net 
 - Sagas implemetation
 - Tested Components
 - Published on gitHub
-- Published on Heroku [Demo](https://meteoreact-dev.herokuapp.com/)
+- Published on Heroku [Demo](https://meteoreact-dev.herokuapp.com/)ç
+- Local storage for persistence
 
 ### Extra requirements
-- Implementation of a fake-backend to simulate the full flow through the app
+- Implementation of a fake-backend for users to simulate the full flow through the app
 - Service layer implementation to manage persistence with saga
 - Elastict/charts implementation to show next days rain predictions.
 - Added icons to translate the current state of the sky-
