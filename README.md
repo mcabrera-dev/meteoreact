@@ -11,7 +11,7 @@ This project is a demo project for querying weather data from the el-tiempo.net 
 - Sagas implemetation
 - Tested Components
 - Published on gitHub
-- Published on Heroku [Demo](https://meteoreact-dev.herokuapp.com/)ç
+- Published on Heroku [Demo](https://meteoreact-dev.herokuapp.com/)
 - Local storage for persistence
 
 ### Extra requirements
